@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Diva</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+  <div class="bg-white rounded shadow-lg p-8 w-full max-w-md">
+    <h2 class="text-2xl font-bold text-purple-700 mb-6 text-center">Login to Diva</h2>
+    <form id="loginForm" class="flex flex-col gap-4">
+      <input type="text" name="identifier" placeholder="Email or Username" required class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400">
+      <input type="password" name="password" placeholder="Password" required class="px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400">
+      <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded font-semibold hover:bg-purple-700 transition">Login</button>
+    </form>
+    <div id="loginError" class="hidden mt-4 text-red-600 font-medium text-center"></div>
+    <div class="mt-6 text-sm text-center">
+      <a href="register.html" class="text-blue-600 hover:underline">Create a new account</a>
+    </div>
+  </div>
+
+  <script>
+    // Demo logic for frontend only
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // In the real app, send login data (identifier, password) to the backend for validation and activation status check
+      document.getElementById('loginError').classList.add('hidden');
+      // Demo: Always allow login; replace with backend request.
+      window.location.href = "dashboard.html";
+    });
+  </script>
+</body>
+</html>

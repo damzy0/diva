@@ -4,35 +4,19 @@
   <meta charset="UTF-8">
   <title>Welcome to Diva</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Tailwind CSS CDN for utility styling -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .dropdown { 
-      display: none; 
-      position: absolute; 
-      right: 1.5rem; 
-      top: 3rem; 
-      background: white; 
-      border-radius: 0.5rem; 
-      box-shadow: 0 2px 6px #0001;
-      z-index: 10;
-      min-width: 120px;
-    }
-    .dropdown.open { display: block; }
-  </style>
-</head>
-<body class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 relative">
-  <!-- Menu Dot (⋮) in top-right -->
+  </head>
+<body class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 relative p-4">
   <div style="position: absolute; top: 1rem; right: 1.5rem; z-index:20;">
-    <button id="menuBtn" class="text-white text-3xl" aria-label="Menu">&#8942;</button>
-    <div id="dropdownMenu" class="dropdown">
-      <a href="login.html" class="block text-purple-700 font-medium py-1 px-2 rounded hover:bg-purple-50 w-full">Login</a>
-      <a href="register.html" class="block text-blue-700 font-medium py-1 px-2 rounded hover:bg-blue-50 w-full">Register</a>
+    <button id="menuBtn" class="text-white text-3xl" aria-label="Menu" aria-expanded="false">&#8942;</button>
+    
+    <div id="dropdownMenu" class="absolute right-0 top-12 bg-white rounded-lg shadow-xl z-10 min-w-32 hidden">
+      <a href="login.html" class="block text-purple-700 font-medium py-2 px-4 rounded hover:bg-purple-50 w-full whitespace-nowrap">Login</a>
+      <a href="register.html" class="block text-blue-700 font-medium py-2 px-4 rounded hover:bg-blue-50 w-full whitespace-nowrap">Register</a>
     </div>
   </div>
 
-  <!-- Main Content -->
-  <h1 class="text-5xl font-extrabold text-white mb-4 mt-8">Welcome to Diva</h1>
+  <h1 class="text-5xl font-extrabold text-white mb-4 mt-8 text-center">Welcome to Diva</h1>
   <p class="text-white text-lg mb-6 text-center max-w-xl">
     Diva is your gateway to earning extra income online! Sign up, get your unique referral link, and start sharing sponsored posts. 
     Track your earnings, redeem bonuses on our spinning wheel, and connect with other affiliates in real time. 
@@ -42,7 +26,8 @@
     <a href="register.html" class="bg-white text-blue-600 px-6 py-2 rounded font-semibold hover:bg-blue-50 transition">Register</a>
     <a href="login.html" class="bg-white text-purple-600 px-6 py-2 rounded font-semibold hover:bg-purple-50 transition">Login</a>
   </div>
-  <footer class="text-white opacity-70 mt-12 text-xs text-center">
+  
+  <footer class="text-white opacity-80 mt-12 text-sm font-medium text-center">
     &copy; <span id="year"></span> Diva Affiliate Platform. Grow your network, boost your earnings.
   </footer>
 
@@ -50,17 +35,28 @@
     // Menu dropdown logic
     const menuBtn = document.getElementById('menuBtn');
     const dropdown = document.getElementById('dropdownMenu');
+    
     menuBtn.addEventListener('click', function(e) {
-      dropdown.classList.toggle('open');
-      e.stopPropagation();
+      // Toggle the 'hidden' class to show/hide the menu
+      dropdown.classList.toggle('hidden');
+      
+      // Update aria-expanded for accessibility
+      const isExpanded = !dropdown.classList.contains('hidden'); // true if NOT hidden
+      menuBtn.setAttribute('aria-expanded', isExpanded.toString());
+      
+      e.stopPropagation(); // Prevents the click from immediately closing the menu via the document listener
     });
+    
+    // Close the menu when clicking anywhere else on the document
     document.addEventListener('click', function(e) {
-      if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.classList.remove('open');
+      // Check if the menu is visible AND the click was outside the button and the menu
+      if (!dropdown.classList.contains('hidden') && !menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.add('hidden');
+        menuBtn.setAttribute('aria-expanded', 'false');
       }
     });
 
-    // Footer year
+    // Footer year logic
     document.getElementById('year').innerText = new Date().getFullYear();
   </script>
 </body>
